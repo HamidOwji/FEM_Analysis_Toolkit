@@ -1,5 +1,5 @@
 import numpy as np
-from Mesh_Tri3_generator import ( generate_elements,
+from Mesh_Tri3_extractor import ( generate_elements,
                                 read_mesh_data, plot_mesh,
                                 plot_displacements,
                                 plot_mesh_with_boundary_conditions,
