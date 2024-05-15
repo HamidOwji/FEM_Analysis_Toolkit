@@ -1,10 +1,7 @@
 import numpy as np
-from Mesh_Tri3_extractor import ( generate_elements,
-                                read_mesh_data, plot_mesh,
-                                plot_displacements,
-                                plot_mesh_with_boundary_conditions,
-                                plot_loads,
-                                plot_mesh_with_loads)
+
+from Mesh_Tri3_extractor import generate_elements, read_mesh_data
+from FEM_CST_plot import (plot_mesh, plot_displacements, plot_mesh_with_boundary_conditions, plot_loads, plot_mesh_with_loads)
 
 
 # Role of B Matrix: The B matrix effectively bridges the gap between the physical displacements of the nodes and the strains in the material.
