@@ -12,7 +12,7 @@ This module contains the main functions for finite element analysis, including t
 
 This module includes functions for reading mesh data from a file and generating elements from the mesh data.
 
-### `plotting.py`
+### `FEM_CST_plotting.py`
 
 This module contains functions for plotting the mesh, nodal displacements, boundary conditions, and loads.
 
