@@ -21,8 +21,10 @@ This module contains functions for plotting the mesh, nodal displacements, bound
 To use these modules, follow these steps:
 
 1. Ensure you have the required dependencies installed:
+
    ```bash
    pip install numpy matplotlib h5py
+   ```
 
     Run the FEM_CST_general.py script with the appropriate mesh file and parameters.
 
