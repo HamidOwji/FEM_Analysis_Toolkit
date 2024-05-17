@@ -1,6 +1,6 @@
 import numpy as np
 from Mesh_Rec8_extractor import generate_elements_for_stiffness, generate_elements_for_plot, read_mesh_data
-import plotting  # Import the new plotting module
+import FEM_LSR_plotting  # Import the new FEM_LSR_plotting module
 from Stiffness_LSR import compute_stiffness_matrix_for_8node_element, compute_B_matrix_for_8node_element
 
 # Material properties (E: Young's modulus, nu: Poisson's ratio)
@@ -164,14 +164,14 @@ F_global_calculated = compute_global_forces(K_global, U_full)
 
 # Uncomment the following line for debugging purposes:
 # print('max dis= ', max(U_full))
-plotting.plot_displacements(node_coordinates, U_full, 'Nodal Displacements', scale_factor=1000)
+FEM_LSR_plotting.plot_displacements(node_coordinates, U_full, 'Nodal Displacements', scale_factor=1000)
 
 # Uncomment the following lines to see different plots:
-# plotting.plot_mesh(elements_for_plot, node_coordinates)
-# plotting.plot_displacements(node_coordinates, U, 'stress')
-# plotting.plot_mesh_with_boundary_conditions(elements_for_plot, node_coordinates, left_boundary_nodes)
-# plotting.plot_loads(node_coordinates, F_external, 1)
-# plotting.plot_mesh_with_loads(elements_for_plot, node_coordinates, left_boundary_nodes, F_external)
+# FEM_LSR_plotting.plot_mesh(elements_for_plot, node_coordinates)
+# FEM_LSR_plotting.plot_displacements(node_coordinates, U, 'stress')
+# FEM_LSR_plotting.plot_mesh_with_boundary_conditions(elements_for_plot, node_coordinates, left_boundary_nodes)
+# FEM_LSR_plotting.plot_loads(node_coordinates, F_external, 1)
+# FEM_LSR_plotting.plot_mesh_with_loads(elements_for_plot, node_coordinates, left_boundary_nodes, F_external)
 
 # Assuming U_full is already defined and contains the displacements for each node
 # Calculate displacement magnitude for each node
