@@ -1,11 +1,6 @@
 import numpy as np
-from salome_python_example.CSR.Mesh_Rec4_generator import ( generate_elements,
-                                read_mesh_data, plot_mesh,
-                                plot_displacements,
-                                plot_mesh_with_boundary_conditions,
-                                plot_loads,
-                                plot_mesh_with_loads)
-
+from Mesh_Rec4_extractor import generate_elements, read_mesh_data
+import FEM_CSR_plotting  # Import the new FEM_CSR_plotting module
 from Stiffness_CSR import compute_stiffness_matrix_for_rectangular_element, compute_B_matrix_for_rectangular_element
 
 # Material properties (E: Young's modulus, nu: Poisson's ratio)
@@ -176,15 +171,15 @@ F_global_calculated = compute_global_forces(K_global, U_full)
 #     print(f"Node {i+1}: x = {x:.6f}, y = {y:.6f}, dx = {dx:.6f}, dy = {dy:.6f}")
 
 # print('max dis= ', max(U_full))
-plot_displacements(node_coordinates, U_full, 'Nodal Displacements', scale_factor=1000)
+FEM_CSR_plotting.plot_displacements(node_coordinates, U_full, 'Nodal Displacements', scale_factor=1000)
 # print(U_full)
-# plot_mesh(elements, node_coordinates)
-# plot_displacements(node_coordinates, U, 'stress')
+# FEM_CSR_plotting.plot_mesh(elements, node_coordinates)
+# FEM_CSR_plotting.plot_displacements(node_coordinates, U, 'stress')
 
 
-# plot_mesh_with_boundary_conditions(elements, node_coordinates, left_boundary_nodes)
-# plot_loads(node_coordinates, F_external, 1)
-# plot_mesh_with_loads(elements, node_coordinates, left_boundary_nodes, F_external)
+# FEM_CSR_plotting.plot_mesh_with_boundary_conditions(elements, node_coordinates, left_boundary_nodes)
+# FEM_CSR_plotting.plot_loads(node_coordinates, F_external, 1)
+# FEM_CSR_plotting.plot_mesh_with_loads(elements, node_coordinates, left_boundary_nodes, F_external)
 
 # Assuming U_full is already defined and contains the displacements for each node
 # Calculate displacement magnitude for each node
