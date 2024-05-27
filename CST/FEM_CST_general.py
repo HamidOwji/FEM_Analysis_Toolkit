@@ -95,24 +95,9 @@ left_boundary_nodes = [node + 1 for node, coord in enumerate(node_coordinates) i
 
 # Initialize the displacement vector with zeros (as a starting assumption)
 U = np.zeros(2 * len(node_coordinates))
-# for distributed load
-# #######################
-# # Define and apply loads (Example: Vertical load at right boundary)
-# total_load = -1000  # Total load value in Newtons
-# load_per_node = total_load / len(right_boundary_nodes)  # Distribute load evenly
-
-# F_external = np.zeros_like(U)
-# for node in right_boundary_nodes:
-#     F_external[2*node-1] = load_per_node Applying distributed load in vertical direction
-#########################
 
 # Identify nodes with x=140 and apply a load of 1000 in the x direction
 F_external = np.zeros_like(U)
-
-# for node, coord in enumerate(node_coordinates):
-#     if coord[0] == 140 and coord[1] == 0:  # Assuming the x-coordinate is the first element in coord
-#         # F_external[2*node] = 1000  # Apply load in x direction
-#         F_external[2*node - 2] = -1000 # F_external[2*(3)-2] = total_load in x direction for y direction F_external[2*(3)-1] = total_load
 
 # Node index where the load will be applied (Python uses 0-based indexing, so node 3 is indexed as 2)
 node_index = 3 - 1 # Adjust for 0-based indexing by subtracting 1
@@ -137,11 +122,13 @@ free_dof = list(free_dof)
 U_full[free_dof] = U_reduced
 
 
-# Use U_full for further calculations
-# print("Global Forces:")
 F_global_calculated = compute_global_forces(K_global, U_full)
+
+# Uncomment the following lines for debugging:
+# print("Global Forces:")
 # print(F_global_calculated)
 
+# Uncomment the following blocks for debugging:
 # for elem in elements:
 #     F_element = compute_element_forces(elem, U_full, D)  
 #     print(f"Element Forces for nodes {elem['nodes']}:")
@@ -160,8 +147,6 @@ F_global_calculated = compute_global_forces(K_global, U_full)
 #     print(f"Minimum (sigma_2): {sigma_2}")
 #     print(f"Angle of Maximum Stress (degrees): {theta_deg}")
 
-    # After obtaining U_full from solving the system of equations
-# print("Node Displacements:")
 # for i, coord in enumerate(node_coordinates):
 #     x, y = coord  # Unpack the x and y coordinates of the node
 #     dx = U_full[2*i]   # x displacement of node i
@@ -180,19 +165,14 @@ plot_displacements(node_coordinates, U_full, 'Nodal Displacements', scale_factor
 # plot_mesh_with_loads(elements, node_coordinates, left_boundary_nodes, F_external)
 
 # Assuming U_full is already defined and contains the displacements for each node
-# Calculate displacement magnitude for each node
 displacement_magnitudes = np.sqrt(U_full[::2]**2 + U_full[1::2]**2)
 
-# Find the index of the node with the maximum displacement
 max_disp_node_index = np.argmax(displacement_magnitudes)
 
-# Calculate the maximum displacement magnitude
 max_disp_magnitude = displacement_magnitudes[max_disp_node_index]
 
-# Node number (assuming node indexing starts from 1)
 max_disp_node_number = max_disp_node_index + 1
 
-# Displacements in x and y directions for the node with maximum displacement
 max_disp_x = U_full[2*max_disp_node_index]
 max_disp_y = U_full[2*max_disp_node_index + 1]
 
