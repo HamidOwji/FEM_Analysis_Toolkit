@@ -1,8 +1,6 @@
 import numpy as np
-
 from Mesh_Tri3_extractor import generate_elements, read_mesh_data
 from FEM_CST_plotting import (plot_mesh, plot_displacements, plot_mesh_with_boundary_conditions, plot_loads, plot_mesh_with_loads)
-
 
 # Role of B Matrix: The B matrix effectively bridges the gap between the physical displacements of the nodes and the strains in the material.
 # By including the B matrix in the stiffness calculation, the stiffness matrix is able to capture how the material's internal stresses are related to nodal displacements.
@@ -154,7 +152,7 @@ F_global_calculated = compute_global_forces(K_global, U_full)
 #     print(f"Node {i+1}: x = {x:.6f}, y = {y:.6f}, dx = {dx:.6f}, dy = {dy:.6f}")
 
 # print('max dis= ', max(U_full))
-plot_displacements(node_coordinates, U_full, 'Nodal Displacements', scale_factor=1000)
+plot_displacements(node_coordinates, U_full, 'Nodal Displacements', scale_factor=500)
 # print(U_full)
 # plot_mesh(elements, node_coordinates)
 # plot_displacements(node_coordinates, U, 'stress')
