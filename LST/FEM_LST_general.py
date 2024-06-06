@@ -1,4 +1,3 @@
-import numpy as np
 from Mesh_Tri6_extractor import ( generate_elements_for_stiffness,
                                 read_mesh_data, plot_mesh,
                                 plot_displacements,
@@ -75,7 +74,7 @@ def compute_D_matrix(E, nu):
     """Compute the D matrix (material matrix)."""
     return E / (1-nu**2) * np.array([[1, nu, 0], [nu, 1, 0], [0, 0, (1-nu)/2]])
 
-# The elemental stiffness matrix is calculated using the formula k = A * Bᵀ * D * B, where
+# The elemental stiffness matrix is calculated using the formula k = A * Bᵀ * D * B
 def compute_stiffness_matrix(coords, D):
     """Compute the stiffness matrix for a CST element."""
     # print('coords', coords[0:3])

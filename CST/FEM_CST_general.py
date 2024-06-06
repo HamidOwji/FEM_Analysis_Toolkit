@@ -27,7 +27,7 @@ def compute_D_matrix(E, nu):
     """Compute the D matrix (material matrix)."""
     return E / (1-nu**2) * np.array([[1, nu, 0], [nu, 1, 0], [0, 0, (1-nu)/2]])
 
-# The elemental stiffness matrix is calculated using the formula k = A * Bᵀ * D * B, where
+# The elemental stiffness matrix is calculated using the formula k = A * Bᵀ * D * B
 def compute_stiffness_matrix(coords, D):
     """Compute the stiffness matrix for a CST element."""
     A, B = compute_area_and_B_matrix(coords)
