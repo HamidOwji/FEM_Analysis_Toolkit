@@ -1,9 +1,5 @@
 from Mesh_Tri6_extractor import ( generate_elements_for_stiffness,
-                                read_mesh_data, plot_mesh,
-                                plot_displacements,
-                                plot_mesh_with_boundary_conditions,
-                                plot_loads,
-                                plot_mesh_with_loads)
+                                read_mesh_data)
 from sympy import symbols, diff, Matrix, lambdify, Rational
 import numpy as np
 import FEM_LST_plotting
@@ -220,13 +216,13 @@ F_global_calculated = compute_global_forces(K_global, U_full)
 #     print(f"Node {i+1}: x = {x:.6f}, y = {y:.6f}, dx = {dx:.6f}, dy = {dy:.6f}")
 
 # print('max dis= ', max(U_full))
-FEM_LST_plotting.plot_displacements(node_coordinates, U_full, 'Nodal Displacements', scale_factor=1000)
+# FEM_LST_plotting.plot_displacements(node_coordinates, U_full, 'Nodal Displacements', scale_factor=1000)
 # print(U_full)
 # plot_mesh(elements, node_coordinates)
 # plot_displacements(node_coordinates, U, 'stress')
 
 
-# plot_mesh_with_boundary_conditions(elements, node_coordinates, left_boundary_nodes)
+FEM_LST_plotting.plot_mesh_with_boundary_conditions(elements, node_coordinates, left_boundary_nodes)
 # plot_loads(node_coordinates, F_external, 1)
 # plot_mesh_with_loads(elements, node_coordinates, left_boundary_nodes, F_external)
 

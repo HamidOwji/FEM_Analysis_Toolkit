@@ -1,5 +1,5 @@
 import numpy as np
-from FEM_Analysis_Toolkit.CSH.Mesh_HEX8_extractor import generate_elements, read_mesh_data
+from Mesh_HEX8_extractor import generate_elements, read_mesh_data
 import FEM_HEX8_plotting  # Import the new FEM_HEX8_FEM_HEX8_plotting module
 from Stiffness_CSH import compute_stiffness_matrix_for_8node_element, compute_B_matrix
 
