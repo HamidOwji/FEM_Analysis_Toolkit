@@ -1,8 +1,9 @@
-from Mesh_Tri6_extractor import ( generate_elements_for_stiffness,
+from Mesh_Tri6_extractor import ( generate_elements_for_stiffness, generate_elements_for_plot,
                                 read_mesh_data)
 from sympy import symbols, diff, Matrix, lambdify, Rational
 import numpy as np
 import FEM_LST_plotting
+from scipy.linalg import solve, eigvals
 
 # Define symbolic variables for coordinates
 x, y = symbols('x y')
@@ -75,7 +76,8 @@ def compute_stiffness_matrix(coords, D):
     """Compute the stiffness matrix for a CST element."""
     # print('coords', coords[0:3])
     # print('D', D)
-    A, B = compute_area_and_B_matrix((coords[0], coords[2], coords[4]))
+    A, B = compute_area_and_B_matrix((coords[0], coords[1], coords[2]))
+    # print('stiffness for element:', A * np.dot(B.T, np.dot(D, B)))
     return A * np.dot(B.T, np.dot(D, B))
 
 def assemble_global_stiffness(elements, D):
@@ -130,11 +132,16 @@ E = 2.1e6  # Modulus of elasticity in Pa (for steel)
 nu = 0.3  # Poisson's ratio (for steel)
 D = compute_D_matrix(E, nu)  # Compute D matrix once and reuse
 
-node_coordinates, element_node_connectivity = read_mesh_data('Mesh_2.med')
+node_coordinates, element_node_connectivity = read_mesh_data('Mesh_2_two_elements.med')
 elements = generate_elements_for_stiffness(node_coordinates, element_node_connectivity)
-
+# print('node coordinate: ', node_coordinates)
+# print('element node connectivity: ', element_node_connectivity)
+# print('elements: ', elements)
 K_global = assemble_global_stiffness(elements, D)
-# print(K_global)
+# eigenvalues_k = eigvals(K_global)
+# print("Eigenvalues of k:", eigenvalues_k)
+# print("Positive Definiteness Check for K global:", np.all(eigenvalues_k > 0))
+print(K_global)
 
 # Identify boundary nodes and apply conditions. This gives us index not node number
 left_boundary_nodes = [node + 1 for node, coord in enumerate(node_coordinates) if coord[0] == 0]
@@ -162,7 +169,7 @@ F_external = np.zeros_like(U)
 #         F_external[2*node - 2] = -1000 # F_external[2*(3)-2] = total_load in x direction for y direction F_external[2*(3)-1] = total_load
 
 # Node index where the load will be applied (Python uses 0-based indexing, so node 3 is indexed as 2)
-node_index = 3 - 1 # Adjust for 0-based indexing by subtracting 1
+node_index = 1 - 1 # 3 - 1 # Adjust for 0-based indexing by subtracting 1
 
 # Apply a load of 1000 in the x direction to node 3
 F_external[2*node_index + 1] = -1000  # Apply load in x direction. For y direction, use 2*node_index + 1
@@ -172,13 +179,26 @@ F_external[2*node_index + 1] = -1000  # Apply load in x direction. For y directi
 fixed_dof = []
 for node in left_boundary_nodes:  # assuming left_boundary_nodes contain fixed nodes
     fixed_dof.extend([2*(node -1), 2*(node -1) +1])
-    
+
+# print('fixed dof: ', fixed_dof)
 K_reduced = np.delete(K_global, fixed_dof, axis=0)  # Remove rows
 K_reduced = np.delete(K_reduced, fixed_dof, axis=1)  # Remove columns
+# print(' K reduced: ', K_reduced)
+condition_number = np.linalg.cond(K_reduced)
+# print("Condition number:", condition_number)
 F_reduced = np.delete(F_external, fixed_dof)
-# print('f reduced: ', F_reduced)
+print('F reduced: ', F_reduced)
 U_reduced = np.linalg.solve(K_reduced, F_reduced)
+
+# Regularization term
+# reg_term = 1e-10 * np.eye(K_reduced.shape[0])
+# k_reduced_reg = K_reduced + reg_term
+
+# U_reduced = solve(k_reduced_reg, F_reduced)
+# print("Displacement vector:", U_reduced)
+print('U reduced: ', U_reduced)
 U_full = np.zeros_like(U)
+# print('u full: ', U_full)
 free_dof = set(range(len(U))) - set(fixed_dof)
 free_dof = list(free_dof)
 U_full[free_dof] = U_reduced
@@ -187,7 +207,7 @@ U_full[free_dof] = U_reduced
 # Use U_full for further calculations
 # print("Global Forces:")
 F_global_calculated = compute_global_forces(K_global, U_full)
-# print(F_global_calculated)
+# print('F global calculated: ', F_global_calculated)
 
 # for elem in elements:
 #     F_element = compute_element_forces(elem, U_full, D)  
@@ -221,8 +241,8 @@ F_global_calculated = compute_global_forces(K_global, U_full)
 # plot_mesh(elements, node_coordinates)
 # plot_displacements(node_coordinates, U, 'stress')
 
-
-FEM_LST_plotting.plot_mesh_with_boundary_conditions(elements, node_coordinates, left_boundary_nodes)
+elements_for_plot = generate_elements_for_plot(node_coordinates, element_node_connectivity)
+FEM_LST_plotting.plot_mesh_with_boundary_conditions(elements_for_plot, node_coordinates, left_boundary_nodes)
 # plot_loads(node_coordinates, F_external, 1)
 # plot_mesh_with_loads(elements, node_coordinates, left_boundary_nodes, F_external)
 

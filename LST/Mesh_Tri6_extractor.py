@@ -31,6 +31,8 @@ def generate_elements_for_plot(node_coordinates, element_node_connectivity):
         elements.append(element_dict)
     return elements
 
+
+
 def read_mesh_data(file_name):
     with h5py.File(file_name, 'r') as file:
         # Read coordinate data
@@ -46,6 +48,10 @@ def read_mesh_data(file_name):
         num_triangles = len(tr6_data) // 6
         sublists = list(divide_list_into_sublists(tr6_data, num_triangles))
         element_node_connectivity = [group for group in zip(*sublists)]
+
+    # node_coordinates=  [(0.0, 0.0), (2.0, 0.0), (1.0, 1.0), (1.0, 0.0), (1.5, 0.5), (0.5, 0.5)]
+    # element_node_connectivity = [(1, 2, 3, 4, 5, 6)]
+    # elements=  [{'nodes': (1, 2, 3, 4, 5, 6), 'coords': ([[ 0.,  0.], [ 2., 0.], [1., 1.], [1., 0.], [1.5, 0.5], [0.5, 0.5]])}]
 
     return node_coordinates, element_node_connectivity
 

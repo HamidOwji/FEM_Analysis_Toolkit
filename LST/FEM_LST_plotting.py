@@ -20,14 +20,14 @@ def plot_mesh(elements, node_coordinates):
     # plt.savefig('plot.png')
     plt.show()
 
-def plot_displacements(node_coordinates, U, title, scale_factor=1):
+def plot_displacements(node_coordinates, U, title, scale_factor=10000):
     plt.figure(figsize=(10, 10))
     if title:
         plt.title(title)
     
     for i, coord in enumerate(node_coordinates):
         displacement = U[2*i:2*i+2] * scale_factor  # Apply scale factor here
-        plt.quiver(coord[0], coord[1], displacement[0], displacement[1], angles='xy', scale_units='xy', scale=1, color='r', label=f'Node {i+1}' if i == 0 else "")
+        plt.quiver(coord[0], coord[1], displacement[0], displacement[1], angles='xy', scale_units='xy', scale=100, color='r', label=f'Node {i+1}' if i == 0 else "")
     
     plt.xlabel('X Coordinate')
     plt.ylabel('Y Coordinate')
