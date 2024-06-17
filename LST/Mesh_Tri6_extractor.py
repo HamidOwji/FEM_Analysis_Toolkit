@@ -18,6 +18,7 @@ def generate_elements_for_stiffness(node_coordinates, element_node_connectivity)
             'coords': np.array([node_coordinates[node - 1] for node in element])
         }
         elements.append(element_dict)
+    # print('elements', elements)
     return elements
 
 def generate_elements_for_plot(node_coordinates, element_node_connectivity):
@@ -58,4 +59,4 @@ def read_mesh_data(file_name):
 if __name__ == "__main__":
     node_coordinates, element_node_connectivity = read_mesh_data('Mesh_2.med')
     elements = generate_elements_for_plot(node_coordinates, element_node_connectivity)
-    FEM_LST_plotting.plot_mesh(elements, node_coordinates)
+    # FEM_LST_plotting.plot_mesh(elements, node_coordinates)

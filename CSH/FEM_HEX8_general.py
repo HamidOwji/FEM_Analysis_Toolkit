@@ -139,8 +139,9 @@ F_global_calculated = compute_global_forces(K_global, U_full)
 #     print(f"Node {i+1}: x = {x:.6f}, y = {y:.6f}, dx = {dx:.6f}, dy = {dy:.6f}")
 
 # print('max dis= ', max(U_full))
-# FEM_HEX8_plotting.plot_displacements(node_coordinates, U_full, 'Nodal Displacements', scale_factor=1000)
 
+FEM_HEX8_plotting.plot_mesh_3d(elements, node_coordinates)
+# FEM_HEX8_plotting.plot_mesh_with_conditions_forces(elements, node_coordinates)
 FEM_HEX8_plotting.plot_mesh_with_conditions_forces_and_deformation(elements, node_coordinates, left_boundary_nodes, F_external, U_full, deformation_scale=2000)
 
 displacement_magnitudes = np.sqrt(U_full[::3]**2 + U_full[1::3]**2 + U_full[2::3]**2)

@@ -170,7 +170,7 @@ FEM_CSR_plotting.plot_displacements(node_coordinates, U_full, 'Nodal Displacemen
 # FEM_CSR_plotting.plot_displacements(node_coordinates, U, 'stress')
 # FEM_CSR_plotting.plot_mesh_with_boundary_conditions(elements, node_coordinates, left_boundary_nodes)
 # FEM_CSR_plotting.plot_loads(node_coordinates, F_external, 1)
-# FEM_CSR_plotting.plot_mesh_with_loads(elements, node_coordinates, left_boundary_nodes, F_external)
+FEM_CSR_plotting.plot_mesh_with_loads(elements, node_coordinates, left_boundary_nodes, F_external)
 
 # Assuming U_full is already defined and contains the displacements for each node
 # Calculate displacement magnitude for each node

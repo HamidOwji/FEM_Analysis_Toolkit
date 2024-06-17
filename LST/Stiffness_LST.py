@@ -76,7 +76,6 @@ def compute_B_matrix_for_6node_element(coords, xi, eta):
 
     return B, det_J
 
-
 if __name__ == "__main__":
 
     # Example coordinates for a 6-node triangular element
